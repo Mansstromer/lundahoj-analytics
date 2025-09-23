@@ -8,7 +8,7 @@ stations = r.json()["network"]["stations"]
 
 print(f"Found {len(stations)} stations")
 for s in stations[:3]:
-    sid = s["id"]awdawdawdaw
+    sid = s["id"]
     name = s["name"]
     lat, lon = s["latitude"], s["longitude"]
     bikes, docks = s.get("free_bikes"), s.get("empty_slots")
