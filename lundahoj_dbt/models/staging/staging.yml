@@ -1,0 +1,16 @@
+version: 2
+
+models:
+  - name: stg_stations
+    columns:
+      - name: station_id
+        tests: [not_null, unique]
+
+  - name: stg_station_readings
+    columns:
+      - name: station_id
+        tests:
+          - relationships:
+              arguments:
+                to: ref('stg_stations')
+                field: station_id

@@ -1,0 +1,16 @@
+name: lundahoj_dbt
+version: 1.0.0
+config-version: 2
+
+profile: lundahoj_dbt
+
+model-paths: ["models"]
+
+models:
+  lundahoj_dbt:
+    staging:
+      +schema: analytics
+      +materialized: view
+    marts:
+      +schema: analytics
+      +materialized: table
