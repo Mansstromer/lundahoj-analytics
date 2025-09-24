@@ -1,0 +1,9 @@
+Database name: lundahoj
+
+Username: postgres
+
+Password: 4268
+
+Host: localhost
+
+Port: 5432
