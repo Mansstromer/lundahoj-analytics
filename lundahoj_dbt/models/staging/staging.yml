@@ -1,16 +1,23 @@
 version: 2
 
-models:
-  - name: stg_stations
-    columns:
-      - name: station_id
-        tests: [not_null, unique]
+sources:
+  - name: public
+    schema: public
+    description: "Raw ingested tables from APIs"
+    tables:
+      - name: stations
+        description: "Bike station metadata (lat/lon, capacity, active)"
 
-  - name: stg_station_readings
-    columns:
-      - name: station_id
-        tests:
-          - relationships:
-              arguments:
-                to: ref('stg_stations')
-                field: station_id
+      - name: station_readings
+        description: "Snapshots of bike availability"
+        freshness:
+          warn_after: {count: 30, period: minute}
+          error_after: {count: 2, period: hour}
+        loaded_at_field: observed_at_utc
+
+      - name: weather
+        description: "Hourly weather observations"
+        freshness:
+          warn_after: {count: 2, period: hour}
+          error_after: {count: 6, period: hour}
+        loaded_at_field: observed_at_utc

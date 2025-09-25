@@ -1,0 +1,40 @@
+version: 2
+
+models:
+  - name: dim_stations
+    description: "Latest attributes per station"
+    columns:
+      - name: station_id
+        tests: [not_null, unique]
+
+  - name: fct_station_availability
+    description: "Station availability time-series"
+    columns:
+      - name: station_id
+        tests:
+          - relationships:
+              to: ref('dim_stations')
+              field: station_id
+      - name: status_ts
+        tests: [not_null]
+      - name: bikes_available
+        tests: []
+      - name: docks_available
+        tests: []
+
+  - name: fct_weather_hourly
+    description: "Hourly aggregated weather"
+    columns:
+      - name: hour_ts
+        tests: [not_null, unique]
+
+  - name: fct_bike_weather
+    description: "Join of availability and hourly weather for ML/analytics"
+    columns:
+      - name: station_id
+        tests:
+          - relationships:
+              to: ref('dim_stations')
+              field: station_id
+      - name: status_ts
+        tests: [not_null]

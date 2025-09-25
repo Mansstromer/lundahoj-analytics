@@ -8,9 +8,14 @@ model-paths: ["models"]
 
 models:
   lundahoj_dbt:
+    +materialized: view
     staging:
-      +schema: analytics
+      +schema: staging
       +materialized: view
     marts:
-      +schema: analytics
+      +schema: marts
       +materialized: table
+    incremental:
+      +schema: marts
+      +materialized: incremental
+
