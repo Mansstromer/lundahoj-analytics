@@ -1,9 +1,21 @@
+#!/usr/bin/env python3
+# ingest/bike.py
+
+"""
+Ingest Lundahoj bike station metadata + availability into Cloud SQL (Postgres).
+- Reads DB creds from project-root .env
+- Idempotent DDL and upserts
+- Retries HTTP with backoff
+"""
+
+from __future__ import annotations
+
 import os
-import sys
-import time
 import logging
+import time
+from pathlib import Path
+from typing import Any, Dict, List, Tuple
 from datetime import datetime, timezone
-from typing import List, Tuple, Dict, Any
 
 import requests
 import psycopg2
@@ -11,28 +23,37 @@ from psycopg2.extras import execute_batch
 from dotenv import load_dotenv
 
 # ---------------- Logging ----------------
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s %(levelname)s %(message)s"
-)
-log = logging.getLogger("ingest")
+logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
+log = logging.getLogger("bike_ingest")
 
-# ---------------- Config -----------------
-load_dotenv()  # reads .env if present
+# ---------------- Env & DB config ----------------
+ENV_PATH = Path(__file__).resolve().parent.parent / ".env"
+if not ENV_PATH.exists():
+    raise RuntimeError(f"Missing .env at {ENV_PATH}")
+load_dotenv(ENV_PATH.as_posix(), override=True)
+
+required = ("PGDATABASE", "PGUSER", "PGPASSWORD", "PGHOST", "PGPORT")
+missing = [k for k in required if not os.getenv(k)]
+if missing:
+    raise RuntimeError(f"Missing required env vars {missing} in {ENV_PATH}")
 
 DB = dict(
-    dbname=os.getenv("PGDATABASE", "lundahoj"),
-    user=os.getenv("PGUSER", "postgres"),
-    password=os.getenv("PGPASSWORD", "postgres"),
-    host=os.getenv("PGHOST", "localhost"),
-    port=int(os.getenv("PGPORT", "5432")),
+    dbname=os.getenv("PGDATABASE"),
+    user=os.getenv("PGUSER"),
+    password=os.getenv("PGPASSWORD"),
+    host=os.getenv("PGHOST"),
+    port=int(os.getenv("PGPORT")),
 )
 
-CITYBIKES_URL = "https://api.citybik.es/v2/networks/lundahoj?fields=stations,updated_at"
+# ---------------- Constants ----------------
+CITYBIKES_URL = (
+    "https://api.citybik.es/v2/networks/lundahoj"
+    "?fields=stations,updated_at"
+)
 
-# ---------------- SQL --------------------
+# ---------------- SQL ----------------
 SQL_CREATE = """
-CREATE TABLE IF NOT EXISTS stations (
+CREATE TABLE IF NOT EXISTS public.stations (
   station_id        TEXT PRIMARY KEY,
   name              TEXT NOT NULL,
   city              TEXT,
@@ -43,42 +64,44 @@ CREATE TABLE IF NOT EXISTS stations (
   first_seen_utc    TIMESTAMPTZ DEFAULT NOW(),
   last_seen_utc     TIMESTAMPTZ
 );
-CREATE TABLE IF NOT EXISTS station_readings (
+CREATE TABLE IF NOT EXISTS public.station_readings (
   reading_id        BIGSERIAL PRIMARY KEY,
-  station_id        TEXT NOT NULL REFERENCES stations(station_id) ON UPDATE CASCADE ON DELETE CASCADE,
+  station_id        TEXT NOT NULL REFERENCES public.stations(station_id) ON UPDATE CASCADE ON DELETE CASCADE,
   bikes_available   INTEGER,
   docks_available   INTEGER,
   percent_full      DOUBLE PRECISION,
   observed_at_utc   TIMESTAMPTZ NOT NULL,
   source            TEXT DEFAULT 'citybikes'
 );
-CREATE UNIQUE INDEX IF NOT EXISTS uq_station_ts ON station_readings(station_id, observed_at_utc);
-CREATE INDEX IF NOT EXISTS idx_readings_ts ON station_readings(observed_at_utc);
-CREATE INDEX IF NOT EXISTS idx_readings_station ON station_readings(station_id);
+CREATE UNIQUE INDEX IF NOT EXISTS uq_station_ts
+  ON public.station_readings(station_id, observed_at_utc);
+CREATE INDEX IF NOT EXISTS idx_readings_ts
+  ON public.station_readings(observed_at_utc);
+CREATE INDEX IF NOT EXISTS idx_readings_station
+  ON public.station_readings(station_id);
 """
 
 SQL_UPSERT_STATION = """
-INSERT INTO stations (station_id, name, city, latitude, longitude, capacity, last_seen_utc)
-VALUES (%s,%s,%s,%s,%s,%s,NOW())
+INSERT INTO public.stations (station_id, name, city, latitude, longitude, capacity, last_seen_utc)
+VALUES (%s, %s, %s, %s, %s, %s, NOW())
 ON CONFLICT (station_id) DO UPDATE
-SET name=EXCLUDED.name,
-    city=EXCLUDED.city,
-    latitude=EXCLUDED.latitude,
-    longitude=EXCLUDED.longitude,
-    capacity=EXCLUDED.capacity,
-    last_seen_utc=NOW();
+SET name = EXCLUDED.name,
+    city = EXCLUDED.city,
+    latitude = EXCLUDED.latitude,
+    longitude = EXCLUDED.longitude,
+    capacity = EXCLUDED.capacity,
+    last_seen_utc = NOW();
 """
 
 SQL_INSERT_READING = """
-INSERT INTO station_readings
+INSERT INTO public.station_readings
 (station_id, bikes_available, docks_available, percent_full, observed_at_utc, source)
-VALUES (%s,%s,%s,%s,%s,'citybikes')
+VALUES (%s, %s, %s, %s, %s, 'citybikes')
 ON CONFLICT (station_id, observed_at_utc) DO NOTHING;
 """
 
-# -------------- Helpers ------------------
+# ---------------- Helpers ----------------
 def http_get_with_retries(url: str, tries: int = 5, timeout: int = 30) -> Dict[str, Any]:
-    """GET with exponential backoff."""
     delay = 1.0
     for attempt in range(1, tries + 1):
         try:
@@ -90,7 +113,7 @@ def http_get_with_retries(url: str, tries: int = 5, timeout: int = 30) -> Dict[s
             if attempt == tries:
                 raise
             time.sleep(delay)
-            delay *= 2  # backoff
+            delay *= 2
     raise RuntimeError("unreachable")
 
 def parse_citybikes(payload: Dict[str, Any]) -> Tuple[List[tuple], List[tuple], datetime]:
@@ -111,7 +134,10 @@ def parse_citybikes(payload: Dict[str, Any]) -> Tuple[List[tuple], List[tuple], 
         sid = str(s.get("id"))
         name = s.get("name")
         lat, lon = s.get("latitude"), s.get("longitude")
-        free_bikes, empty_slots = s.get("free_bikes"), s.get("empty_slots")
+        free_bikes = s.get("free_bikes")
+        empty_slots = s.get("empty_slots")
+
+        # capacity: prefer extra.slots; else derive from bikes + docks
         capacity = s.get("extra", {}).get("slots")
         if capacity is None and (free_bikes is not None and empty_slots is not None):
             capacity = (free_bikes or 0) + (empty_slots or 0)
@@ -127,9 +153,9 @@ def parse_citybikes(payload: Dict[str, Any]) -> Tuple[List[tuple], List[tuple], 
 
     return station_rows, reading_rows, observed_at
 
-# --------------- Main --------------------
+# ---------------- Main ----------------
 def main() -> None:
-    log.info("Starting ingest")
+    log.info("Starting bike ingest")
     payload = http_get_with_retries(CITYBIKES_URL, tries=5, timeout=30)
     station_rows, reading_rows, observed_at = parse_citybikes(payload)
     log.info("Fetched %d stations @ %s", len(station_rows), observed_at.isoformat())
@@ -137,9 +163,7 @@ def main() -> None:
     with psycopg2.connect(**DB) as conn:
         conn.autocommit = True
         with conn.cursor() as cur:
-            # Ensure schema exists (idempotent)
             cur.execute(SQL_CREATE)
-
             if station_rows:
                 execute_batch(cur, SQL_UPSERT_STATION, station_rows, page_size=500)
             if reading_rows:
@@ -150,7 +174,7 @@ def main() -> None:
 if __name__ == "__main__":
     try:
         main()
-        sys.exit(0)
+        raise SystemExit(0)
     except Exception:
         log.exception("Ingest failed")
-        sys.exit(1)
+        raise SystemExit(1)
