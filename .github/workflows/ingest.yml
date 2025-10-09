@@ -35,7 +35,7 @@ jobs:
       - run: pip install -r requirements.txt
 
       - name: Weather ingest
-        run: python ingest/weather_ingest.py
+        run: python ingest/ingest_weather.py
         env:
           PGHOST: ${{ secrets.PGHOST }}
           PGPORT: ${{ secrets.PGPORT }}
@@ -44,7 +44,7 @@ jobs:
           PGPASSWORD: ${{ secrets.PGPASSWORD }}
 
       - name: Bike ingest
-        run: python ingest/bike_ingest.py
+        run: python ingest/ingest_bike.py
         env:
           PGHOST: ${{ secrets.PGHOST }}
           PGPORT: ${{ secrets.PGPORT }}
