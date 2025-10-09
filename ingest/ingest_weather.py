@@ -65,12 +65,13 @@ INSERT INTO raw.weather_hourly
 (ts_utc, temp_c, precip_mm, wind_mps, rel_humidity_pct, pressure_hpa, cloud_cover_pct)
 VALUES %s
 ON CONFLICT (ts_utc) DO UPDATE SET
-  temp_c=EXCLUDED.temp_c,
-  precip_mm=EXCLUDED.precip_mm,
-  wind_mps=EXCLUDED.wind_mps,
-  rel_humidity_pct=EXCLUDED.rel_humidity_pct,
-  pressure_hpa=EXCLUDED.pressure_hpa,
-  cloud_cover_pct=EXCLUDED.cloud_cover_pct;
+  temp_c           = EXCLUDED.temp_c,
+  precip_mm        = EXCLUDED.precip_mm,
+  wind_mps         = EXCLUDED.wind_mps,
+  rel_humidity_pct = EXCLUDED.rel_humidity_pct,
+  pressure_hpa     = EXCLUDED.pressure_hpa,
+  cloud_cover_pct  = EXCLUDED.cloud_cover_pct,
+  loaded_at_utc    = timezone('utc', now());
 """
 
 # ---------------- HTTP ----------------
