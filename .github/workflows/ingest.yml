@@ -1,0 +1,53 @@
+name: Ingest Data to Neon
+
+on:
+  schedule:
+    - cron: "5 * * * *"      # weather hourly at HH:05 UTC
+    - cron: "*/20 * * * *"   # bikes every 20 minutes UTC
+  workflow_dispatch:          # manual run button in Actions tab
+
+jobs:
+  ingest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # Avoid overlapping runs if a previous job is still running
+    concurrency:
+      group: lundahoj-ingest
+      cancel-in-progress: false
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install deps (cached)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - run: pip install -r requirements.txt
+
+      - name: Weather ingest
+        run: python ingest/weather_ingest.py
+        env:
+          PGHOST: ${{ secrets.PGHOST }}
+          PGPORT: ${{ secrets.PGPORT }}
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          PGUSER: ${{ secrets.PGUSER }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
+
+      - name: Bike ingest
+        run: python ingest/bike_ingest.py
+        env:
+          PGHOST: ${{ secrets.PGHOST }}
+          PGPORT: ${{ secrets.PGPORT }}
+          PGDATABASE: ${{ secrets.PGDATABASE }}
+          PGUSER: ${{ secrets.PGUSER }}
+          PGPASSWORD: ${{ secrets.PGPASSWORD }}
