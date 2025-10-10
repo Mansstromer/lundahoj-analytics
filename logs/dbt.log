@@ -1,0 +1,110 @@
+[0m09:31:55.031864 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1067d4ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1067b8450>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106832c10>]}
+
+
+============================== 09:31:55.033949 | 4e19d8de-faf9-4c72-a1db-cd203e61195b ==============================
+[0m09:31:55.033949 [info ] [MainThread]: Running with dbt=1.10.11
+[0m09:31:55.034200 [debug] [MainThread]: running dbt with arguments {'version_check': 'True', 'introspect': 'True', 'fail_fast': 'False', 'log_format': 'default', 'partial_parse': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'profiles_dir': '/Users/mansstormer/.dbt', 'send_anonymous_usage_stats': 'True', 'no_print': 'None', 'invocation_command': 'dbt init lundahoj', 'use_experimental_parser': 'False', 'target_path': 'None', 'write_json': 'True', 'use_colors': 'True', 'debug': 'False', 'static_parser': 'True', 'quiet': 'False', 'log_path': 'logs', 'cache_selected_only': 'False', 'printer_width': '80', 'warn_error': 'None', 'indirect_selection': 'eager', 'empty': 'None', 'log_cache_events': 'False'}
+[0m09:31:55.043546 [debug] [MainThread]: Starter project path: /opt/miniconda3/envs/biker/lib/python3.11/site-packages/dbt/include/starter_project
+[0m09:31:55.046371 [info ] [MainThread]: 
+Your new dbt project "lundahoj" was created!
+
+For more information on how to configure the profiles.yml file,
+please consult the dbt documentation here:
+
+  https://docs.getdbt.com/docs/configure-your-profile
+
+One more thing:
+
+Need help? Don't hesitate to reach out to us via GitHub issues or on Slack:
+
+  https://community.getdbt.com/
+
+Happy modeling!
+
+[0m09:31:55.046526 [info ] [MainThread]: Setting up your profile.
+[0m09:35:24.342439 [info ] [MainThread]: Profile lundahoj written to /Users/mansstormer/.dbt/profiles.yml using target's profile_template.yml and your supplied values. Run 'dbt debug' to validate the connection.
+[0m09:35:24.362723 [debug] [MainThread]: Resource report: {"command_name": "init", "command_success": true, "command_wall_clock_time": 209.35854, "process_in_blocks": "0", "process_kernel_time": 0.156028, "process_mem_max_rss": "132792320", "process_out_blocks": "0", "process_user_time": 0.85334}
+[0m09:35:24.363566 [debug] [MainThread]: Command `dbt init` succeeded at 09:35:24.363432 after 209.36 seconds
+[0m09:35:24.364027 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106857610>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x101298e90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1012991d0>]}
+[0m09:35:24.364444 [debug] [MainThread]: Flushing usage events
+[0m09:35:25.843774 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m09:36:49.896518 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106f24390>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106f8a190>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106fa6c50>]}
+
+
+============================== 09:36:49.898705 | 609083cc-f644-444b-91b8-fffba50599ad ==============================
+[0m09:36:49.898705 [info ] [MainThread]: Running with dbt=1.10.11
+[0m09:36:49.898940 [debug] [MainThread]: running dbt with arguments {'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'warn_error': 'None', 'fail_fast': 'False', 'log_format': 'default', 'cache_selected_only': 'False', 'send_anonymous_usage_stats': 'True', 'invocation_command': 'dbt debug', 'debug': 'False', 'target_path': 'None', 'static_parser': 'True', 'partial_parse': 'True', 'no_print': 'None', 'quiet': 'False', 'empty': 'None', 'log_cache_events': 'False', 'use_experimental_parser': 'False', 'version_check': 'True', 'printer_width': '80', 'profiles_dir': '/Users/mansstormer/.dbt', 'introspect': 'True', 'write_json': 'True', 'log_path': 'logs', 'use_colors': 'True', 'indirect_selection': 'eager'}
+[0m09:36:49.906251 [info ] [MainThread]: dbt version: 1.10.11
+[0m09:36:49.906427 [info ] [MainThread]: python version: 3.11.9
+[0m09:36:49.906559 [info ] [MainThread]: python path: /opt/miniconda3/envs/biker/bin/python3.11
+[0m09:36:49.906665 [info ] [MainThread]: os info: macOS-15.6.1-arm64-arm-64bit
+[0m09:36:49.936984 [info ] [MainThread]: Using profiles dir at /Users/mansstormer/.dbt
+[0m09:36:49.937188 [info ] [MainThread]: Using profiles.yml file at /Users/mansstormer/.dbt/profiles.yml
+[0m09:36:49.937299 [info ] [MainThread]: Using dbt_project.yml file at /Users/mansstormer/Documents/Projects/Lundahoj Analytics Neon/dbt_project.yml
+[0m09:36:49.937428 [error] [MainThread]: Encountered an error:
+Internal Error
+  Profile should not be None if loading profile completed
+[0m09:36:49.939239 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.069048375, "process_in_blocks": "0", "process_kernel_time": 0.10315, "process_mem_max_rss": "132120576", "process_out_blocks": "0", "process_user_time": 0.820036}
+[0m09:36:49.939404 [debug] [MainThread]: Command `dbt debug` failed at 09:36:49.939374 after 0.07 seconds
+[0m09:36:49.939528 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x100a6cd90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x100a6d010>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x106f23a90>]}
+[0m09:36:49.939653 [debug] [MainThread]: Flushing usage events
+[0m09:36:50.456366 [debug] [MainThread]: An error was encountered while trying to flush usage events
+[0m09:44:59.045961 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'start', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1072e9650>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109e01ad0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x109dff510>]}
+
+
+============================== 09:44:59.048125 | b3db8003-7618-4791-a63b-3a3d9b75e1c0 ==============================
+[0m09:44:59.048125 [info ] [MainThread]: Running with dbt=1.10.11
+[0m09:44:59.048368 [debug] [MainThread]: running dbt with arguments {'target_path': 'None', 'static_parser': 'True', 'warn_error': 'None', 'debug': 'False', 'use_colors': 'True', 'warn_error_options': 'WarnErrorOptionsV2(error=[], warn=[], silence=[])', 'printer_width': '80', 'fail_fast': 'False', 'indirect_selection': 'eager', 'introspect': 'True', 'invocation_command': 'dbt debug', 'log_path': 'logs', 'partial_parse': 'True', 'no_print': 'None', 'send_anonymous_usage_stats': 'True', 'version_check': 'True', 'empty': 'None', 'quiet': 'False', 'cache_selected_only': 'False', 'profiles_dir': '/Users/mansstormer/.dbt', 'write_json': 'True', 'log_format': 'default', 'log_cache_events': 'False', 'use_experimental_parser': 'False'}
+[0m09:44:59.055561 [info ] [MainThread]: dbt version: 1.10.11
+[0m09:44:59.055734 [info ] [MainThread]: python version: 3.11.9
+[0m09:44:59.055858 [info ] [MainThread]: python path: /opt/miniconda3/envs/biker/bin/python3.11
+[0m09:44:59.055960 [info ] [MainThread]: os info: macOS-15.6.1-arm64-arm-64bit
+[0m09:44:59.085738 [info ] [MainThread]: Using profiles dir at /Users/mansstormer/.dbt
+[0m09:44:59.085945 [info ] [MainThread]: Using profiles.yml file at /Users/mansstormer/.dbt/profiles.yml
+[0m09:44:59.086058 [info ] [MainThread]: Using dbt_project.yml file at /Users/mansstormer/Documents/Projects/Lundahoj Analytics Neon/dbt_project.yml
+[0m09:44:59.086409 [info ] [MainThread]: adapter type: postgres
+[0m09:44:59.086512 [info ] [MainThread]: adapter version: 1.9.1
+[0m09:44:59.086615 [info ] [MainThread]: Configuration:
+[0m09:44:59.086710 [info ] [MainThread]:   profiles.yml file [[32mOK found and valid[0m]
+[0m09:44:59.086796 [info ] [MainThread]:   dbt_project.yml file [[31mERROR not found[0m]
+[0m09:44:59.086882 [info ] [MainThread]: Required dependencies:
+[0m09:44:59.086994 [debug] [MainThread]: Executing "git --help"
+[0m09:44:59.098475 [debug] [MainThread]: STDOUT: "b"usage: git [-v | --version] [-h | --help] [-C <path>] [-c <name>=<value>]\n           [--exec-path[=<path>]] [--html-path] [--man-path] [--info-path]\n           [-p | --paginate | -P | --no-pager] [--no-replace-objects] [--no-lazy-fetch]\n           [--no-optional-locks] [--no-advice] [--bare] [--git-dir=<path>]\n           [--work-tree=<path>] [--namespace=<name>] [--config-env=<name>=<envvar>]\n           <command> [<args>]\n\nThese are common Git commands used in various situations:\n\nstart a working area (see also: git help tutorial)\n   clone      Clone a repository into a new directory\n   init       Create an empty Git repository or reinitialize an existing one\n\nwork on the current change (see also: git help everyday)\n   add        Add file contents to the index\n   mv         Move or rename a file, a directory, or a symlink\n   restore    Restore working tree files\n   rm         Remove files from the working tree and from the index\n\nexamine the history and state (see also: git help revisions)\n   bisect     Use binary search to find the commit that introduced a bug\n   diff       Show changes between commits, commit and working tree, etc\n   grep       Print lines matching a pattern\n   log        Show commit logs\n   show       Show various types of objects\n   status     Show the working tree status\n\ngrow, mark and tweak your common history\n   backfill   Download missing objects in a partial clone\n   branch     List, create, or delete branches\n   commit     Record changes to the repository\n   merge      Join two or more development histories together\n   rebase     Reapply commits on top of another base tip\n   reset      Reset current HEAD to the specified state\n   switch     Switch branches\n   tag        Create, list, delete or verify a tag object signed with GPG\n\ncollaborate (see also: git help workflows)\n   fetch      Download objects and refs from another repository\n   pull       Fetch from and integrate with another repository or a local branch\n   push       Update remote refs along with associated objects\n\n'git help -a' and 'git help -g' list available subcommands and some\nconcept guides. See 'git help <command>' or 'git help <concept>'\nto read about a specific subcommand or concept.\nSee 'git help git' for an overview of the system.\n""
+[0m09:44:59.098849 [debug] [MainThread]: STDERR: "b''"
+[0m09:44:59.099000 [info ] [MainThread]:  - git [[32mOK found[0m]
+
+[0m09:44:59.099127 [info ] [MainThread]: Connection:
+[0m09:44:59.099259 [info ] [MainThread]:   host: ep-aged-bonus-ag3j3swz.c-2.eu-central-1.aws.neon.tech
+[0m09:44:59.099355 [info ] [MainThread]:   port: 5432
+[0m09:44:59.099443 [info ] [MainThread]:   user: neondb_owner
+[0m09:44:59.099530 [info ] [MainThread]:   database: neondb
+[0m09:44:59.099614 [info ] [MainThread]:   schema: analytics
+[0m09:44:59.099699 [info ] [MainThread]:   connect_timeout: 10
+[0m09:44:59.099784 [info ] [MainThread]:   role: None
+[0m09:44:59.099869 [info ] [MainThread]:   search_path: None
+[0m09:44:59.099954 [info ] [MainThread]:   keepalives_idle: 0
+[0m09:44:59.100036 [info ] [MainThread]:   sslmode: None
+[0m09:44:59.100119 [info ] [MainThread]:   sslcert: None
+[0m09:44:59.100203 [info ] [MainThread]:   sslkey: None
+[0m09:44:59.100286 [info ] [MainThread]:   sslrootcert: None
+[0m09:44:59.100371 [info ] [MainThread]:   application_name: dbt
+[0m09:44:59.100455 [info ] [MainThread]:   retries: 1
+[0m09:44:59.100693 [info ] [MainThread]: Registered adapter: postgres=1.9.1
+[0m09:44:59.150416 [debug] [MainThread]: Acquiring new postgres connection 'debug'
+[0m09:44:59.208401 [debug] [MainThread]: Using postgres connection "debug"
+[0m09:44:59.208571 [debug] [MainThread]: On debug: select 1 as id
+[0m09:44:59.208669 [debug] [MainThread]: Opening a new connection, currently in state init
+[0m09:44:59.392447 [debug] [MainThread]: SQL status: SELECT 1 in 0.184 seconds
+[0m09:44:59.393267 [debug] [MainThread]: On debug: Close
+[0m09:44:59.393650 [info ] [MainThread]:   Connection test: [[32mOK connection ok[0m]
+
+[0m09:44:59.393904 [info ] [MainThread]: [31m1 check failed:[0m
+[0m09:44:59.394128 [info ] [MainThread]: Project loading failed for the following reason:
+ project path </Users/mansstormer/Documents/Projects/Lundahoj Analytics Neon/dbt_project.yml> not found
+
+[0m09:44:59.397759 [debug] [MainThread]: Resource report: {"command_name": "debug", "command_success": false, "command_wall_clock_time": 0.37775964, "process_in_blocks": "0", "process_kernel_time": 0.15543, "process_mem_max_rss": "143933440", "process_out_blocks": "0", "process_user_time": 0.8519}
+[0m09:44:59.398118 [debug] [MainThread]: Command `dbt debug` failed at 09:44:59.398045 after 0.38 seconds
+[0m09:44:59.398355 [debug] [MainThread]: Connection 'debug' was properly closed.
+[0m09:44:59.398602 [debug] [MainThread]: Sending event: {'category': 'dbt', 'action': 'invocation', 'label': 'end', 'context': [<snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1047d8d90>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x1047d90d0>, <snowplow_tracker.self_describing_json.SelfDescribingJson object at 0x10acb1350>]}
+[0m09:44:59.398880 [debug] [MainThread]: Flushing usage events
+[0m09:44:59.847865 [debug] [MainThread]: An error was encountered while trying to flush usage events

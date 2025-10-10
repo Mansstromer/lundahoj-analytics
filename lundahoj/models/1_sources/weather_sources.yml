@@ -1,0 +1,11 @@
+version: 2
+
+# Defines source that can be referenced
+# {{ source('lundahoj', 'weather_hourly') }}.
+
+sources:
+  - name: lundahoj
+    database: neondb
+    schema: raw
+    tables:
+      - name: weather_hourly
