@@ -1,0 +1,35 @@
+version: 2
+
+# Defines source that can be referenced
+# {{ source('lundahoj', 'station_snapshot') }}.
+
+sources:
+  - name: lundahoj
+    database: neondb
+    schema: raw
+    tables:
+      - name: station_snapshot
+        description: "Raw station-level snapshots fetched from the CityBikes API."
+        columns:
+          - name: station_id
+            description: "Unique identifier for each Lundahoj station."
+            tests: [not_null]
+          - name: snapshot_ts_utc
+            description: "Timestamp (UTC) when the API snapshot was taken."
+            tests: [not_null]
+          - name: free_bikes
+            description: "Number of bikes available for rental at the snapshot time."
+          - name: empty_slots
+            description: "Number of empty docks at the snapshot time."
+          - name: name
+            description: "Human-readable name of the station."
+          - name: lat
+            description: "Station latitude coordinate."
+          - name: lon
+            description: "Station longitude coordinate."
+          - name: source
+            description: "Data source identifier; always 'citybikes'."
+          - name: loaded_at_utc
+            description: "Ingestion timestamp when the record was inserted into Neon."
+            tests:
+              - "not_null"
