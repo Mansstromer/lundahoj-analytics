@@ -13,5 +13,5 @@ with raw as (
 )
 select
     *,
-    (bikes_available::float / nullif((bikes_available + docks_available), 0)::float) as percent_full
+    (bikes_available::float / nullif(bikes_available + docks_available, 0)::float) * 100 as percent_full
 from raw

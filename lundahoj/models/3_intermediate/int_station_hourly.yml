@@ -1,0 +1,25 @@
+version: 2
+
+models:
+  - name: int_station_hourly
+    description: "Hourly aggregation of station snapshots: mean/min/max and sample count per (station_id, hour UTC)."
+    tests:
+      - dbt_utils.unique_combination_of_columns:
+          combination_of_columns: [station_id, date_hour_utc]
+    columns:
+      - name: station_id
+        tests: [not_null]
+      - name: date_hour_utc
+        tests: [not_null]
+      - name: percent_full_min
+        tests:
+          - dbt_utils.accepted_range:
+              arguments: {min_value: 0, max_value: 100, inclusive: true}
+      - name: percent_full_max
+        tests:
+          - dbt_utils.accepted_range:
+              arguments: {min_value: 0, max_value: 100, inclusive: true}
+      - name: samples_per_hour
+        tests:
+          - dbt_utils.accepted_range:
+              arguments: {min_value: 0, max_value: 100, inclusive: true}
