@@ -1,4 +1,5 @@
 -- one row per raw snapshot; observed capacity at that snapshot
+-- stg_station_capacity.sql
 select
   station_id,
   snapshot_utc,

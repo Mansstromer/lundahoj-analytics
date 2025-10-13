@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: int_station_activity
+    description: "Aggregates deltas into hourly ride activity estimates per station. Approximates total ride flow based on net changes in availability."
+    columns:
+      - name: station_id
+        description: "Unique identifier for each station."
+        tests: [not_null]
+      - name: date_hour_utc
+        description: "Hour of activity, UTC."
+        tests: [not_null]
+      - name: est_rides_started
+        description: "Estimated rides started (bikes taken out)."
+      - name: est_rides_ended
+        description: "Estimated rides ended (bikes returned)."
+      - name: est_total_rides
+        description: "Approximate total rides (|delta| / 2)."
