@@ -22,8 +22,8 @@ with s as (
 ),
 w as (
   select
-    date_trunc('hour', timestamp_utc) as date_hour_utc, -- derived hour key
-    timestamp_utc                     as weather_timestamp_utc, -- keep true source timestamp
+    date_trunc('hour', date_hour_utc) as date_hour_utc, -- derived hour key
+    date_hour_utc                     as weather_date_hour_utc, -- keep true source timestamp
     temperature_c,
     precipitation_mm,
     wind_speed_m_s,
@@ -46,7 +46,7 @@ select
   s.percent_full_min,
   s.percent_full_max,
   s.samples_per_hour,
-  w.weather_timestamp_utc,  -- provenance
+  w.weather_date_hour_utc,  -- provenance
   w.temperature_c,
   w.precipitation_mm,
   w.wind_speed_m_s,

@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: mart_network_summary
+    description: "City-level summary of daily total rides and average utilization across all stations."
+    columns:
+      - name: date
+        description: "Date of the aggregated statistics."
+        tests: [not_null]
+      - name: total_rides_started
+        description: "Total number of rides started across the network."
+      - name: total_rides_ended
+        description: "Total number of rides ended across the network."
+      - name: total_rides
+        description: "Estimated total rides for the day."
+      - name: mean_utilization
+        description: "Average system-wide dock utilization."

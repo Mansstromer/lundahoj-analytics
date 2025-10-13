@@ -6,7 +6,7 @@ models:
   - name: stg_weather
     description: "Clean, standardized hourly weather observations. Renames raw fields and keeps units explicit."
     columns:
-      - name: timestamp_utc
+      - name: date_hour_utc
         description: "Observation timestamp in UTC."
         tests: [not_null]
 

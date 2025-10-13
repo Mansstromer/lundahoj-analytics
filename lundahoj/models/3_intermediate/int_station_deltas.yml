@@ -1,0 +1,18 @@
+version: 2
+
+models:
+  - name: int_station_deltas
+    description: "Computes per-station hourly change in available bikes after gap-filling. Each delta represents the net difference since the previous hour."
+    columns:
+      - name: station_id
+        description: "Unique identifier for each station."
+        tests: [not_null]
+      - name: date_hour_utc
+        description: "Hour of observation, UTC."
+        tests: [not_null]
+      - name: bikes_available
+        description: "Number of bikes available at the station for the given hour."
+      - name: prev_bikes
+        description: "Bikes available during the previous hour."
+      - name: delta
+        description: "Net change in bikes_available compared to the previous hour (negative = more rides started, positive = more bikes returned)."

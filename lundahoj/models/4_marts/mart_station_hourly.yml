@@ -1,0 +1,20 @@
+version: 2
+
+models:
+  - name: mart_station_hourly
+    description: "Hourly metrics for each station, combining ride activity and utilization."
+    columns:
+      - name: station_id
+        description: "Unique identifier for each station."
+        tests: [not_null]
+      - name: date_hour_utc
+        description: "Hour of observation, UTC."
+        tests: [not_null]
+      - name: est_rides_started
+        description: "Estimated rides started in this hour."
+      - name: est_rides_ended
+        description: "Estimated rides ended in this hour."
+      - name: est_total_rides
+        description: "Approximate total ride activity."
+      - name: utilization
+        description: "Ratio of occupied docks to total capacity."

@@ -1,6 +1,6 @@
 with raw as (
     select
-        ts_utc                  as timestamp_utc,
+        ts_utc                  as date_hour_utc,
         temp_c                  as temperature_c,
         precip_mm               as precipitation_mm,
         wind_mps                as wind_speed_m_s,
