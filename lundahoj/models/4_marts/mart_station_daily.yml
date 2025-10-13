@@ -1,20 +1,8 @@
 version: 2
-
 models:
   - name: mart_station_daily
-    description: "Daily aggregates of station-level ride metrics and utilization."
     columns:
       - name: station_id
-        description: "Unique identifier for each station."
         tests: [not_null]
-      - name: date
-        description: "Date of observation (UTC)."
+      - name: date_utc        # was: date
         tests: [not_null]
-      - name: est_rides_started
-        description: "Total estimated rides started that day."
-      - name: est_rides_ended
-        description: "Total estimated rides ended that day."
-      - name: est_total_rides
-        description: "Total ride activity for the day."
-      - name: avg_utilization
-        description: "Average dock utilization throughout the day."

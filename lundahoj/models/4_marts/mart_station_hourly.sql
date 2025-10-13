@@ -1,15 +1,14 @@
--- mart_station_hourly.sql
-SELECT
-    a.station_id,
-    a.date_hour_utc,
-    a.est_rides_started,
-    a.est_rides_ended,
-    a.est_total_rides,
-    c.capacity_total,
-    (c.capacity_total - g.bikes_available_avg)::float / NULLIF(c.capacity_total, 0) AS utilization
-FROM {{ ref('int_station_activity') }} AS a
-LEFT JOIN {{ ref('int_station_gap_fill_hourly') }} AS g
-  ON a.station_id = g.station_id
-  AND a.date_hour_utc = g.date_hour_utc
-LEFT JOIN {{ ref('stg_station_capacity') }} AS c
-  ON a.station_id = c.station_id
+-- example mart_station_hourly.sql
+select
+  s.station_id,
+  d.date_hour_utc,
+  avg(c.bikes_available) as avg_bikes_available,
+  avg(c.docks_available) as avg_docks_available,
+  avg(c.bikes_available::float / nullif(c.bikes_available + c.docks_available,0)) as fill_ratio
+from {{ ref('dim_datetime_hourly') }} d
+cross join (select distinct station_id from {{ ref('stg_station_capacity') }}) s
+left join {{ ref('stg_station_capacity') }} c
+  on c.station_id = s.station_id
+ and date_trunc('hour', c.snapshot_utc) = d.date_hour_utc
+group by s.station_id, d.date_hour_utc
+order by s.station_id, d.date_hour_utc
