@@ -1,1 +1,8 @@
-.env
+.env# Metabase + binaries
+lundahoj/metabase.jar
+lundahoj/plugins/
+*.jar
+*.zip
+*.tar
+*.tar.gz
+*.bin
