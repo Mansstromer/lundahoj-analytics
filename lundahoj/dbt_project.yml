@@ -47,3 +47,8 @@ models:
         +incremental_strategy: merge         # on Postgres uses upsert
         +unique_key: ["station_id", "date_hour_utc"]  # adjust to your grain
         +on_schema_change: append_new_columns
+
+vars:
+  fleet_window_days: 7
+  fleet_quantile: 0.99
+  min_hour_coverage_pct: 0.7

@@ -1,0 +1,19 @@
+version: 2
+models:
+  - name: mart_daily_active_bikes
+    description: "Daily active bikes = max_docked − min_docked per day; also utilization vs fleet."
+    columns:
+      - name: day
+        tests: [not_null, unique]
+      - name: daily_active_bikes
+        tests:
+          - not_null
+          - dbt_utils.accepted_range:
+              min_value: 0
+              inclusive: true
+      - name: utilization_ratio
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0
+              max_value: 1
+              inclusive: true
