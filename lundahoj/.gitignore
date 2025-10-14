@@ -1,3 +1,6 @@
 target/
 dbt_packages/
 logs/
+metabase.jar,
+metabase.db.mv.db,
+metabase.db.trace.db

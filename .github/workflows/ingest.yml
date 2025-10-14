@@ -3,7 +3,7 @@ name: Ingest Data to Neon
 on:
   schedule:
     - cron: "5 * * * *"      # weather hourly at HH:05 UTC
-    - cron: "*/20 * * * *"   # bikes every 20 minutes UTC
+    - cron: "*/10 * * * *"   # bikes every 20 minutes UTC
   workflow_dispatch:          # manual run button in Actions tab
 
 jobs:
