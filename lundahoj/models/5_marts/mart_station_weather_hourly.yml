@@ -1,0 +1,31 @@
+# models/5_marts/mart_station_weather_hourly.yml
+version: 2
+
+models:
+  - name: mart_station_weather_hourly
+    description: "Station × hour analytic base table: hourly fill ratio joined with hourly weather."
+    columns:
+      - name: station_id
+        description: "Station business key."
+        tests: [not_null]
+      - name: date_hour_utc
+        description: "Hour-aligned timestamp (UTC)."
+        tests: [not_null]
+      - name: fill_ratio
+        description: "Mean bikes_available / capacity_total within the hour."
+      - name: precip_mm
+        description: "Hourly precipitation (mm)."
+      - name: temp_c
+        description: "Hourly temperature (°C)."
+      - name: wind_mps
+        description: "Hourly wind speed (m/s)."
+      - name: rel_humidity_pct
+        description: "Relative humidity (%)."
+      - name: weekday
+        description: "Day of week (0=Sun … 6=Sat)."
+      - name: hour_of_day
+        description: "Hour of day (0–23)."
+      - name: is_weekend
+        description: "True if Saturday or Sunday."
+      - name: is_rush_hour
+        description: "True if 07–09 or 16–18."

@@ -5,6 +5,7 @@
 
 select
   station_id::text                as station_id,
+  name::text,
   snapshot_ts_utc::timestamp      as snapshot_ts_utc,
   free_bikes::int                 as bikes_available,
   empty_slots::int                as docks_available,

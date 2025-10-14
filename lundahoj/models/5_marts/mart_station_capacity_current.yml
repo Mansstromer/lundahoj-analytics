@@ -1,0 +1,10 @@
+version: 2
+models:
+  - name: mart_capacity_current
+    columns:
+      - name: station_id
+        tests: [not_null]
+      - name: latitude
+        tests: [not_null]
+      - name: longitude
+        tests: [not_null]
