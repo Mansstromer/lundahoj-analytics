@@ -11,5 +11,7 @@ models:
       - name: bikes_available
       - name: docks_available
       - name: capacity
+        tests:
+          - not_null
       - name: latitude
       - name: longitude
