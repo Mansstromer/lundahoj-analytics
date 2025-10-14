@@ -1,0 +1,12 @@
+version: 2
+models:
+  - name: mart_fleet_estimate
+    columns:
+      - name: fleet_estimate
+        tests: [not_null]
+      - name: coverage_pct
+        tests:
+          - dbt_utils.accepted_range:
+              min_value: 0.7
+              max_value: 1
+              inclusive: true
