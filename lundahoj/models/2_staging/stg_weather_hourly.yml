@@ -1,0 +1,15 @@
+# models/1_staging/stg_weather.yml
+version: 2
+
+models:
+  - name: stg_weather_hourly
+    description: "Cleaned hourly Lund weather observations used for correlation and modeling."
+    columns:
+      - name: date_hour_utc
+        tests: [not_null]
+      - name: temp_c
+      - name: precip_mm
+      - name: wind_mps
+      - name: rel_humidity_pct
+      - name: pressure_hpa
+      - name: cloud_cover_pct

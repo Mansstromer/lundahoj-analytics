@@ -1,0 +1,15 @@
+# models/1_staging/stg_weather.yml
+version: 2
+
+models:
+  - name: stg_station_snapshot
+    description: "Cleaned and renamed model for station occupancy data, grain = station x observation"
+    columns:
+      - name: station_id
+        tests: [not_null]
+      - name: snapshot_ts_utc
+      - name: bikes_available
+      - name: docks_available
+      - name: capacity
+      - name: latitude
+      - name: longitude
