@@ -4,3 +4,8 @@ logs/
 metabase.jar,
 metabase.db.mv.db,
 metabase.db.trace.db
+
+# Binaries
+*.jar
+lundahoj/metabase.jar
+lundahoj/plugins/
