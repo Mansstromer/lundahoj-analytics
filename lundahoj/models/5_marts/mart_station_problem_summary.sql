@@ -11,13 +11,20 @@ with station_names as (
   from {{ ref('stg_station_snapshot') }}
   where name is not null
 ),
+capacity_ranked as (
+  select
+    station_id,
+    capacity,
+    row_number() over (partition by station_id order by snapshot_ts_utc desc) as rn
+  from {{ ref('stg_station_snapshot') }}
+  where capacity is not null
+),
 capacity as (
   select
     station_id,
     capacity
-  from {{ ref('stg_station_snapshot') }}
-  where capacity is not null
-  qualify row_number() over (partition by station_id order by snapshot_ts_utc desc) = 1
+  from capacity_ranked
+  where rn = 1
 ),
 hourly_status as (
   select
@@ -47,9 +54,9 @@ select
   p.hours_empty,
   p.hours_full,
   (p.hours_empty + p.hours_full) as hours_problem,
-  round((p.hours_empty + p.hours_full)::float / nullif(p.total_hours, 0) * 100, 1) as downtime_pct,
-  round(p.hours_empty::float / nullif(p.total_hours, 0) * 100, 1) as empty_pct,
-  round(p.hours_full::float / nullif(p.total_hours, 0) * 100, 1) as full_pct
+  round(((p.hours_empty + p.hours_full)::float / nullif(p.total_hours, 0) * 100)::numeric, 1) as downtime_pct,
+  round((p.hours_empty::float / nullif(p.total_hours, 0) * 100)::numeric, 1) as empty_pct,
+  round((p.hours_full::float / nullif(p.total_hours, 0) * 100)::numeric, 1) as full_pct
 from problem_calcs p
 left join station_names n using (station_id)
 where (p.hours_empty + p.hours_full) > 0

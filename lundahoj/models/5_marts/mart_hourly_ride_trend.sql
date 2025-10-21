@@ -14,8 +14,8 @@ with hourly_rides as (
 )
 select
   hour_of_day,
-  round(avg(rides), 1) as avg_rides,
-  round(percentile_cont(0.5) within group (order by rides), 1) as median_rides,
+  round(avg(rides)::numeric, 1) as avg_rides,
+  round(percentile_cont(0.5) within group (order by rides)::numeric, 1) as median_rides,
   min(rides) as min_rides,
   max(rides) as max_rides,
   count(*) as sample_count

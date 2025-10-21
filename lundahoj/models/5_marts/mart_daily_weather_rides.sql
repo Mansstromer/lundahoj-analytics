@@ -26,9 +26,9 @@ select
   r.date,
   r.total_rides as rides,
   coalesce(w.total_rain_mm, 0) as rain_mm,
-  round(w.avg_wind_mps, 1) as wind_mps,
-  round(w.avg_temp_c, 1) as temp_c,
-  round(w.avg_humidity_pct, 1) as humidity_pct,
+  round(w.avg_wind_mps::numeric, 1) as wind_mps,
+  round(w.avg_temp_c::numeric, 1) as temp_c,
+  round(w.avg_humidity_pct::numeric, 1) as humidity_pct,
   extract(dow from r.date) as day_of_week,
   extract(week from r.date) as week_of_year,
   extract(year from r.date) as year
