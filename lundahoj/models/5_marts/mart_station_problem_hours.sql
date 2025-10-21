@@ -16,8 +16,8 @@ problem_calcs as (
   select
     station_id,
     count(*) as total_hours,
-    sum(case when occupancy_pct < 0.1 then 1 else 0 end) as hours_empty,
-    sum(case when occupancy_pct > 0.9 then 1 else 0 end) as hours_full
+    sum(case when occupancy_pct = 0 then 1 else 0 end) as hours_empty,
+    sum(case when occupancy_pct = 1 then 1 else 0 end) as hours_full
   from hourly
   where occupancy_pct is not null
   group by 1
