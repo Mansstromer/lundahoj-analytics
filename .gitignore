@@ -14,3 +14,4 @@ lundahoj/logs/
 lundahoj/target/
 metabase.jar
 metabase.db.*
+logs/dbt.log
