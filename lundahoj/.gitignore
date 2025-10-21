@@ -1,6 +1,7 @@
 target/
 dbt_packages/
 lundahoj/logs/
+logs
 metabase.jar,
 metabase.db.mv.db,
 metabase.db.trace.db
