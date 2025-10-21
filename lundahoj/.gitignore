@@ -9,3 +9,8 @@ metabase.db.trace.db
 *.jar
 lundahoj/metabase.jar
 lundahoj/plugins/
+
+# Binaries
+*.jar
+lundahoj/metabase.jar
+lundahoj/plugins/
