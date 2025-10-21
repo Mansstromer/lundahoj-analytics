@@ -1,0 +1,15 @@
+version: 2
+
+models:
+  - name: mart_daily_active_bikes
+    columns:
+      - name: date_day
+        tests:
+          - not_null
+          - unique
+      - name: daily_active_bikes
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              arguments:
+                expression: ">= 0"
