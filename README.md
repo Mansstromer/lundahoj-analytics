@@ -44,9 +44,8 @@ An end-to-end analytics engineering project that ingests live data from Lundahoj
 Bike-sharing services face a critical operational challenge: **bikes are frequently unavailable when customers need them**.
 
 ### The Cost of Poor Availability
-- **Lost Revenue:** Empty stations during peak hours mean missed rides
 - **Customer Frustration:** Full stations prevent returns, forcing customers to keep riding
-- **Operational Inefficiency:** Without data, rebalancing decisions are reactive and costly
+- **Operational Inefficiency:** Without data, rebalancing decisions are difficult to make
 
 ### Research Questions
 1. Which stations have chronic availability problems?
@@ -58,7 +57,7 @@ Bike-sharing services face a critical operational challenge: **bikes are frequen
 
 ## ✅ Solution
 
-Built a **live analytics pipeline** that continuously monitors 20 stations and surfaces insights through 5 key visualizations:
+Built a **live analytics pipeline** that continuously monitors the stations and surfaces insights through 5 key visualizations:
 
 1. **Real-time Station Health Monitor** - Instant visibility into current availability
 2. **Hourly Demand Patterns** - Reveals rush hour peaks for proactive rebalancing
@@ -93,8 +92,7 @@ Built a **live analytics pipeline** that continuously monitors 20 stations and s
 - Open-source and widely supported
 
 **Why Metabase?**
-- Open-source BI tool perfect for operational dashboards
-- Low-latency queries for real-time monitoring
+- Free open-source BI tool perfect for operational dashboards
 - Easy for non-technical users to explore data
 
 ---
