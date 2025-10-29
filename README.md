@@ -1,6 +1,6 @@
-# 🚴 Lundahoj Bike-Sharing Analytics Dashboard
+# 🚴 Lundahoj Bike-Rental Analytics Dashboard
 
-> Real-time analytics pipeline transforming live bike-sharing data into actionable operational insights
+> Real-time analytics pipeline transforming live bike-rental data into actionable operational insights
 
 [![dbt](https://img.shields.io/badge/dbt-FF694B?style=flat&logo=dbt&logoColor=white)](https://www.getdbt.com/)
 [![PostgreSQL](https://img.shields.io/badge/PostgreSQL-316192?style=flat&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
@@ -27,7 +27,7 @@
 
 ## 🎯 Overview
 
-An end-to-end analytics engineering project that ingests live data from Lundahoj's bike-sharing API, transforms it using dbt, and delivers operational insights through an interactive dashboard.
+An end-to-end analytics engineering project that ingests live data from Lundahoj's bike-rental API, transforms it using dbt, and delivers operational insights through an interactive dashboard.
 
 **System Stats:**
 - 📍 **20 stations** monitored in real-time
@@ -41,7 +41,7 @@ An end-to-end analytics engineering project that ingests live data from Lundahoj
 
 ## 🔍 Business Problem
 
-Bike-sharing services face a critical operational challenge: **bikes are frequently unavailable when customers need them**.
+Bike-rental services face a critical operational challenge: **bikes are frequently unavailable when customers need them**.
 
 ### The Cost of Poor Availability
 - **Customer Frustration:** Full stations prevent returns, forcing customers to keep riding
