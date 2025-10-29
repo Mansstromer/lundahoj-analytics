@@ -13,5 +13,11 @@ models:
       - name: capacity
         tests:
           - not_null
+          - station_capacity_valid:
+              arguments:
+                capacity_col: capacity
+                bikes_col: bikes_available
+                docks_col: docks_available
+
       - name: latitude
       - name: longitude
