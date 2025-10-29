@@ -10,6 +10,10 @@ sources:
     tables:
       - name: weather_hourly
         description: "Hourly weather observations including temperature, precipitation, wind, and other meteorological data."
+        loaded_at_field: loaded_at_utc
+        freshness:
+          warn_after: {count: 2, period: hour}
+          error_after: {count: 4, period: hour}
         columns:
           - name: ts_utc
             description: "Timestamp of the weather observation (UTC)."

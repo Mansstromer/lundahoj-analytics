@@ -7,6 +7,10 @@ sources:
   - name: lundahoj
     database: neondb
     schema: raw
+    freshness:
+      warn_after: {count: 30, period: minute}
+      error_after: {count: 60, period: minute}
+    loaded_at_field: loaded_at_utc
     tables:
       - name: station_snapshot
         description: "Raw station-level snapshots fetched from the CityBikes API."
@@ -33,3 +37,4 @@ sources:
             description: "Ingestion timestamp when the record was inserted into Neon."
             tests:
               - "not_null"
+            
