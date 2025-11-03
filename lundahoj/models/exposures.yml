@@ -1,0 +1,33 @@
+version: 2
+
+exposures:
+  - name: lundahoj_analytics_dashboard
+    type: dashboard
+    maturity: high
+    url: https://metabase-production-lundahoj.up.railway.app/dashboard/2-lundahoj-analytics
+    description: >
+      Lundahoj bike-sharing analytics dashboard with four key visualizations:
+      
+      (1) Daily Weather vs Rides - Shows daily ride volume correlated with rain (mm) 
+      and wind speed (m/s). Helps identify weather impact on ridership.
+      
+      (2) Hourly Demand - Bar chart showing average rides by hour of day (0-23). 
+      Reveals peak usage times for capacity planning.
+      
+      (3) Problem Stations - Horizontal bar chart showing stations with highest 
+      downtime (hours empty or full). Identifies rebalancing priorities.
+      
+      (4) Weekly Ride Trend - Line chart showing total rides aggregated by week. 
+      Tracks overall system growth and seasonal patterns.
+      
+      Used by operations team for daily monitoring and by management for 
+      strategic planning.
+    
+    depends_on:
+      - ref('mart_daily_weather_rides')      # Powers visualizations 1 & 4
+      - ref('mart_hourly_ride_trend')        # Powers visualization 2
+      - ref('mart_station_problem_summary')  # Powers visualization 3
+    
+    owner:
+      name: Måns Stromer
+      email: mans.stromer@hotmail.se
