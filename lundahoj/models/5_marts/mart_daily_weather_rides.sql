@@ -3,13 +3,23 @@
 -- Shows: daily rides, rain, wind (can be aggregated to weekly in Metabase)
 -- grain: 1 row per date
 
-{{ config(materialized='table') }}
+{{ config(
+  materialized='incremental',
+  unique_key='date',
+  on_schema_change="sync_all_columns") }}
 
 with daily_rides as (
   select
     date_trunc('day', date_hour_utc)::date as date,
     sum(bikes_moved_estimate) as total_rides
   from {{ ref('int_bikes_moved_hourly') }}
+  {% if is_incremental() %}
+    -- only process dates we haven't seen yet (plus yesterday to be safe)
+      where date_trunc('day', date_hour_utc)::date >= (
+        select max(date) - interval '1 day' 
+        from {{ this }}
+      )
+  {% endif %}
   group by 1
 ),
 daily_weather as (

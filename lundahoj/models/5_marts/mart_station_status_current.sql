@@ -25,7 +25,7 @@ select
   name as station_name,
   bikes_available,
   capacity,
-  round((bikes_available::float / nullif(capacity, 0) * 100)::numeric, 1) as occupancy_pct,
+  {{ calculate_percentage('bikes_available', 'capacity') }} as occupancy_pct,
   snapshot_ts_utc as last_updated_utc,
   latitude,
   longitude
