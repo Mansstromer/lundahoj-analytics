@@ -15,3 +15,6 @@ lundahoj/target/
 metabase.jar
 metabase.db.*
 logs/dbt.log
+
+# environment files
+.env
