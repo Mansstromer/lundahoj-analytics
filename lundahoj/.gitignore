@@ -27,3 +27,4 @@ metabase.jar
 metabase.db.*
 
 
+dbt_internal_packages/

@@ -26,7 +26,7 @@ with snaps as (
 select
   station_id,
   date_hour_utc,
-  /* physics: bikes_docked = capacity - docks_available, clamped to [0, capacity] */
+  /* calc: bikes_docked = capacity - docks_available, clamped to [0, capacity] */
   greatest(least(capacity - docks_available, capacity), 0) as bikes_docked,
   capacity
 from snaps
