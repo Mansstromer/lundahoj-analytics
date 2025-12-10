@@ -5,7 +5,10 @@ models:
     description: One row per station × hour using latest snapshot in that hour.
     tests:
       - dbt_utils.unique_combination_of_columns:
-          combination_of_columns: [station_id, date_hour_utc]
+          arguments:
+            combination_of_columns:
+              - station_id
+              - date_hour_utc
     columns:
       - name: station_id
         tests: [not_null]
@@ -15,11 +18,13 @@ models:
         tests:
           - not_null
           - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
+              arguments:
+                min_value: 0
+                inclusive: true
       - name: capacity
         tests:
           - not_null
           - dbt_utils.accepted_range:
-              min_value: 0
-              inclusive: true
+              arguments:
+                min_value: 0
+                inclusive: true
